@@ -5,6 +5,7 @@ from django.db import transaction
 
 from db.models import MovieSession
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def create_movie_session(
@@ -57,4 +58,8 @@ def update_movie_session(
 
 
 def delete_movie_session_by_id(session_id: int) -> None:
-    MovieSession.objects.filter(id=session_id).delete()
+    try:
+        session = MovieSession.objects.get(id=session_id)  # get the exact object
+        session.delete()
+    except ObjectDoesNotExist:
+        raise ValueError(f"MovieSession with id={session_id} does not exist.")
