@@ -59,7 +59,7 @@ def update_movie_session(
 
 def delete_movie_session_by_id(session_id: int) -> None:
     try:
-        session = MovieSession.objects.get(id=session_id)  # get the exact object
+        session = MovieSession.objects.get(id=session_id)
         session.delete()
     except ObjectDoesNotExist:
         raise ValueError(f"MovieSession with id={session_id} does not exist.")
